@@ -41,6 +41,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.d3if3128.asesmenmobpro2.R
@@ -50,13 +51,27 @@ const val KEY_ID_PEMINJAMAN = "idPeminjaman"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(navController: NavHostController, id:Long? = null){
+    val viewModel: DetailViewModel = viewModel()
+
     var nama by remember { mutableStateOf("") }
     var nim by remember { mutableStateOf("") }
     var nohp by remember { mutableStateOf("") }
     var judulbuku by remember { mutableStateOf("") }
-    var selectedClass by remember { mutableStateOf("Sedang Dipinjam") }
+    var selectedStatus by remember { mutableStateOf("Sedang Dipinjam") }
     var tanggalpinjam by remember { mutableStateOf("") }
     var tanggalkembali by remember { mutableStateOf("") }
+
+    if(id != null){
+        val data = viewModel.getPeminjaman(id)
+        nama = data?.nama ?: ""
+        nim = data?.nim ?: ""
+        nohp = data?.nohp ?: ""
+        judulbuku = data?.judulbuku ?: ""
+        selectedStatus = data?.status ?: ""
+        tanggalpinjam = data?.tanggalpinjam ?: ""
+        tanggalkembali = data?.tanggalkembali ?: ""
+
+    }
 
     Scaffold(
         topBar = {
@@ -101,8 +116,8 @@ fun DetailScreen(navController: NavHostController, id:Long? = null){
             onCellNumberChange = {nohp = it},
             booktitle = judulbuku,
             onBookTitleChange = {judulbuku = it},
-            selectedClass = selectedClass,
-            onClassSelected = {selectedClass = it},
+            selectedStatus = selectedStatus,
+            onStatusSelected = {selectedStatus = it},
             borrowDate = tanggalpinjam,
             onBorrowDateChange = {tanggalpinjam = it},
             returnDate = tanggalkembali,
@@ -118,7 +133,7 @@ fun FormPeminjaman(
     number: String, onNumberChange: (String) -> Unit,
     cellnumber: String, onCellNumberChange: (String) -> Unit,
     booktitle: String, onBookTitleChange: (String) -> Unit,
-    selectedClass: String, onClassSelected: (String) -> Unit,
+    selectedStatus: String, onStatusSelected: (String) -> Unit,
     borrowDate: String, onBorrowDateChange: (String) -> Unit,
     returnDate: String, onReturnDateChange: (String) ->Unit,
     modifier: Modifier
@@ -187,13 +202,13 @@ fun FormPeminjaman(
                 .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
         ){
             radioOptions.forEach{text ->
-                ClassOption(
+                StatusOption(
                     label = text,
-                    isSelected = selectedClass == text,
+                    isSelected = selectedStatus == text,
                     modifier = Modifier
                         .selectable(
-                            selected = selectedClass == text,
-                            onClick = {onClassSelected(text)},
+                            selected = selectedStatus == text,
+                            onClick = {onStatusSelected(text)},
                             role = Role.RadioButton
                         )
                 )
@@ -215,7 +230,7 @@ fun FormPeminjaman(
 }
 
 @Composable
-fun ClassOption(label: String, isSelected: Boolean, modifier: Modifier){
+fun StatusOption(label: String, isSelected: Boolean, modifier: Modifier){
     Row (
         modifier = modifier
             .fillMaxWidth()
