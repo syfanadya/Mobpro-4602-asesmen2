@@ -90,7 +90,7 @@ fun ScreenContent(modifier: Modifier){
         ) {
             Image(
                 painter = painterResource(id = R.drawable.emptynote),
-                contentDescription = "Empty data image",
+                contentDescription = stringResource(R.string.empty_data_image),
                 modifier = Modifier.size(100.dp)
             )
             Spacer(modifier = Modifier.height(16.dp))
