@@ -37,14 +37,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import org.d3if3128.asesmenmobpro2.R
 import org.d3if3128.asesmenmobpro2.model.Peminjaman
+import org.d3if3128.asesmenmobpro2.navigation.Screen
 import org.d3if3128.asesmenmobpro2.ui.theme.AsesmenMobpro2Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(){
-    val context = LocalContext.current
+fun MainScreen(navController: NavHostController){
 
     Scaffold(
         topBar = {
@@ -61,7 +63,7 @@ fun MainScreen(){
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    Toast.makeText(context, R.string.tambah_error, Toast.LENGTH_SHORT).show()
+                   navController.navigate(Screen.FromBaru.route)
                 }
             ) {
                 Icon(
@@ -139,6 +141,6 @@ fun ListItem(peminjaman: Peminjaman, onClick: () -> Unit){
 @Composable
 fun GreetingPreview() {
     AsesmenMobpro2Theme {
-        MainScreen()
+        MainScreen(rememberNavController())
     }
 }
