@@ -41,15 +41,15 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.d3if3128.asesmenmobpro2.R
 import org.d3if3128.asesmenmobpro2.ui.theme.AsesmenMobpro2Theme
 
+const val KEY_ID_PEMINJAMAN = "idPeminjaman"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(navController: NavHostController){
+fun DetailScreen(navController: NavHostController, id:Long? = null){
     var nama by remember { mutableStateOf("") }
     var nim by remember { mutableStateOf("") }
     var nohp by remember { mutableStateOf("") }
@@ -71,7 +71,10 @@ fun DetailScreen(navController: NavHostController){
                     }
                 },
                 title = {
+                    if(id == null)
                         Text(text = stringResource(id = R.string.tambah_peminjaman))
+                    else
+                        Text(text = stringResource(id = R.string.edit_peminjaman))
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
