@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,6 +53,7 @@ import org.d3if3128.asesmenmobpro2.ui.theme.AsesmenMobpro2Theme
 import org.d3if3128.asesmenmobpro2.util.ViewModelFactory
 
 const val KEY_ID_PEMINJAMAN = "idPeminjaman"
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(navController: NavHostController, id:Long? = null){
@@ -68,6 +70,16 @@ fun DetailScreen(navController: NavHostController, id:Long? = null){
     var tanggalpinjam by remember { mutableStateOf(viewModel.getCurrentFormattedDate()) }
     var tanggalkembali by remember { mutableStateOf("") }
 
+    LaunchedEffect(true){
+        if (id == null) return@LaunchedEffect
+        val data = viewModel.getPeminjaman(id) ?: return@LaunchedEffect
+        nama = data.nama
+        nim = data.nim
+        nohp = data.nohp
+        judulbuku = data.judulbuku
+        selectedStatus = data.status
+        tanggalkembali = data.tanggalkembali
+    }
 
     Scaffold(
         topBar = {
@@ -99,7 +111,10 @@ fun DetailScreen(navController: NavHostController, id:Long? = null){
                         }
                         if (id == null){
                             viewModel.insert(nama, nim, nohp, judulbuku, selectedStatus, tanggalkembali)
+                        } else {
+                            viewModel.update(id, nama, nim, nohp, judulbuku, selectedStatus, tanggalpinjam, tanggalkembali)
                         }
+
                         navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Outlined.Check,
