@@ -65,20 +65,9 @@ fun DetailScreen(navController: NavHostController, id:Long? = null){
     var nohp by remember { mutableStateOf("") }
     var judulbuku by remember { mutableStateOf("") }
     var selectedStatus by remember { mutableStateOf("Sedang Dipinjam") }
-    var tanggalpinjam by remember { mutableStateOf("") }
+    var tanggalpinjam by remember { mutableStateOf(viewModel.getCurrentFormattedDate()) }
     var tanggalkembali by remember { mutableStateOf("") }
 
-//    if(id != null){
-//        val data = viewModel.getPeminjaman(id)
-//        nama = data?.nama ?: ""
-//        nim = data?.nim ?: ""
-//        nohp = data?.nohp ?: ""
-//        judulbuku = data?.judulbuku ?: ""
-//        selectedStatus = data?.status ?: ""
-//        tanggalpinjam = data?.tanggalpinjam ?: ""
-//        tanggalkembali = data?.tanggalkembali ?: ""
-//
-//    }
 
     Scaffold(
         topBar = {
@@ -161,7 +150,7 @@ fun FormPeminjaman(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(start = 16.dp, end = 16.dp, bottom = 168.dp)
+            .padding(start = 16.dp, end = 16.dp, bottom = 300.dp)
             .padding(top = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -233,12 +222,22 @@ fun FormPeminjaman(
             value = borrowDate,
             onValueChange = {onBorrowDateChange(it)},
             label = { Text(text = stringResource(R.string.tanggal_pinjam))},
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next
+            ),
+            enabled = false,
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
             value = returnDate,
             onValueChange = {onReturnDateChange(it)},
             label = { Text(text = stringResource(R.string.tanggal_kembali))},
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done
+            ),
             modifier = Modifier.fillMaxWidth()
         )
     }

@@ -29,6 +29,11 @@ class DetailViewModel(private val dao: PeminjamanDao) : ViewModel() {
         }
     }
 
+    fun getCurrentFormattedDate(): String {
+        return formatter.format(Date())
+    }
+
+
 //    fun getPeminjaman(id: Long): Peminjaman? {
 //        return mainViewModel.data.find { it.id == id }
 //    }
