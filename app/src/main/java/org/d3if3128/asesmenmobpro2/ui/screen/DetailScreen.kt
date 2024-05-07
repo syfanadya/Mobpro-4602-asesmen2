@@ -1,6 +1,7 @@
 package org.d3if3128.asesmenmobpro2.ui.screen
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
@@ -41,16 +43,22 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.d3if3128.asesmenmobpro2.R
+import org.d3if3128.asesmenmobpro2.database.PeminjamanDb
 import org.d3if3128.asesmenmobpro2.ui.theme.AsesmenMobpro2Theme
+import org.d3if3128.asesmenmobpro2.util.ViewModelFactory
 
 const val KEY_ID_PEMINJAMAN = "idPeminjaman"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(navController: NavHostController, id:Long? = null){
-//    val viewModel: DetailViewModel = viewModel()
+    val context = LocalContext.current
+    val db = PeminjamanDb.getInstance(context)
+    val factory = ViewModelFactory(db.dao)
+    val viewModel: DetailViewModel = viewModel(factory = factory)
 
     var nama by remember { mutableStateOf("") }
     var nim by remember { mutableStateOf("") }
@@ -95,7 +103,15 @@ fun DetailScreen(navController: NavHostController, id:Long? = null){
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 actions = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = {
+                        if(nama == "" || nim == "" || nohp == "" || judulbuku == ""|| tanggalpinjam == "" || tanggalkembali == ""){
+                            Toast.makeText(context, R.string.invalid, Toast.LENGTH_LONG).show()
+                            return@IconButton
+                        }
+                        if (id == null){
+                            viewModel.insert(nama, nim, nohp, judulbuku, selectedStatus, tanggalkembali)
+                        }
+                        navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Outlined.Check,
                             contentDescription = stringResource(R.string.simpan),
@@ -145,7 +161,7 @@ fun FormPeminjaman(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(start = 16.dp, end = 16.dp, bottom = 190.dp)
+            .padding(start = 16.dp, end = 16.dp, bottom = 168.dp)
             .padding(top = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
