@@ -41,7 +41,6 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.d3if3128.asesmenmobpro2.R
@@ -51,7 +50,7 @@ const val KEY_ID_PEMINJAMAN = "idPeminjaman"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(navController: NavHostController, id:Long? = null){
-    val viewModel: DetailViewModel = viewModel()
+//    val viewModel: DetailViewModel = viewModel()
 
     var nama by remember { mutableStateOf("") }
     var nim by remember { mutableStateOf("") }
@@ -61,17 +60,17 @@ fun DetailScreen(navController: NavHostController, id:Long? = null){
     var tanggalpinjam by remember { mutableStateOf("") }
     var tanggalkembali by remember { mutableStateOf("") }
 
-    if(id != null){
-        val data = viewModel.getPeminjaman(id)
-        nama = data?.nama ?: ""
-        nim = data?.nim ?: ""
-        nohp = data?.nohp ?: ""
-        judulbuku = data?.judulbuku ?: ""
-        selectedStatus = data?.status ?: ""
-        tanggalpinjam = data?.tanggalpinjam ?: ""
-        tanggalkembali = data?.tanggalkembali ?: ""
-
-    }
+//    if(id != null){
+//        val data = viewModel.getPeminjaman(id)
+//        nama = data?.nama ?: ""
+//        nim = data?.nim ?: ""
+//        nohp = data?.nohp ?: ""
+//        judulbuku = data?.judulbuku ?: ""
+//        selectedStatus = data?.status ?: ""
+//        tanggalpinjam = data?.tanggalpinjam ?: ""
+//        tanggalkembali = data?.tanggalkembali ?: ""
+//
+//    }
 
     Scaffold(
         topBar = {
@@ -146,7 +145,7 @@ fun FormPeminjaman(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(start = 16.dp, end = 16.dp, bottom = 168.dp)
+            .padding(start = 16.dp, end = 16.dp, bottom = 190.dp)
             .padding(top = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally

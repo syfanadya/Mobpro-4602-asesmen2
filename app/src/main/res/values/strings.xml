@@ -17,4 +17,5 @@
     <string name="kembali">Kembali</string>
     <string name="simpan">Simpan</string>
     <string name="edit_peminjaman">Ubah Peminjaman</string>
+    <string name="invalid">Isian tidak boleh kosong</string>
 </resources>

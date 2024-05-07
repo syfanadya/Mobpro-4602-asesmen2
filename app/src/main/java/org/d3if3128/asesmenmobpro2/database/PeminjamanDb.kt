@@ -6,31 +6,29 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import org.d3if3128.asesmenmobpro2.model.Peminjaman
 
-class PeminjamanDb {
-    @Database(entities = [Peminjaman::class], version = 1, exportSchema = false)
-    abstract class PeminjamanDb : RoomDatabase(){
-        abstract val dao: PeminjamanDao
+@Database(entities = [Peminjaman::class], version = 1, exportSchema = false)
+abstract class PeminjamanDb : RoomDatabase() {
 
-        companion object{
-            @Volatile
-            private var INSTANCE: PeminjamanDb? =null
+    abstract val dao: PeminjamanDao
 
-            fun getInstance(context: Context): PeminjamanDb {
-                synchronized(this){
-                    var instance = INSTANCE
+    companion object {
+        @Volatile
+        private var INSTANCE: PeminjamanDb? = null
 
-                    if (instance == null){
-                        instance = Room.databaseBuilder(
-                            context.applicationContext,
-                            PeminjamanDb::class.java,
-                            "peminjaman.db"
-                        ).build()
-                        INSTANCE = instance
-                    }
-                    return instance
+        fun getInstance(context: Context): PeminjamanDb {
+            synchronized(this){
+                var instance = INSTANCE
+
+                if (instance == null){
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        PeminjamanDb::class.java,
+                        "datamahasiswa.db"
+                    ).build()
+                    INSTANCE = instance
                 }
+                return instance
             }
-
         }
     }
 }
