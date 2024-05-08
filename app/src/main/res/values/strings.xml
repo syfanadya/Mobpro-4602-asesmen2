@@ -18,4 +18,6 @@
     <string name="simpan">Simpan</string>
     <string name="edit_peminjaman">Ubah Peminjaman</string>
     <string name="invalid">Isian tidak boleh kosong</string>
+    <string name="lainnya">Opsi lainnya</string>
+    <string name="hapus">Hapus peminjaman</string>
 </resources>

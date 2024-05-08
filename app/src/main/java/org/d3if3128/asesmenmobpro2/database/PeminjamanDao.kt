@@ -20,4 +20,7 @@ interface PeminjamanDao {
 
     @Query("SELECT * FROM peminjaman WHERE id = :id")
     suspend fun getPeminjamanById(id: Long): Peminjaman?
+
+    @Query("DELETE FROM peminjaman WHERE id = :id")
+    suspend fun deleteById(id:Long)
 }
