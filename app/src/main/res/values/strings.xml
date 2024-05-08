@@ -20,4 +20,7 @@
     <string name="invalid">Isian tidak boleh kosong</string>
     <string name="lainnya">Opsi lainnya</string>
     <string name="hapus">Hapus peminjaman</string>
+    <string name="pesan_hapus">Hapus peminjaman ini?</string>
+    <string name="tombol_hapus">Hapus</string>
+    <string name="tombol_batal">Batal</string>
 </resources>

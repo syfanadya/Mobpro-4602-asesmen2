@@ -73,6 +73,8 @@ fun DetailScreen(navController: NavHostController, id:Long? = null){
     var tanggalpinjam by remember { mutableStateOf(viewModel.getCurrentFormattedDate()) }
     var tanggalkembali by remember { mutableStateOf("") }
 
+    var showDialog by remember { mutableStateOf(false) }
+
     LaunchedEffect(true){
         if (id == null) return@LaunchedEffect
         val data = viewModel.getPeminjaman(id) ?: return@LaunchedEffect
@@ -126,8 +128,12 @@ fun DetailScreen(navController: NavHostController, id:Long? = null){
                         )
                     }
                     if (id != null){
-                        DeleteAction {
-                            viewModel.delele(id)
+                        DeleteAction {showDialog = true}
+                        DisplayAlertDialog(
+                            openDialog = showDialog,
+                            onDismissRequest = { showDialog = false }) {
+                            showDialog = false
+                            viewModel.delete(id)
                             navController.popBackStack()
                         }
                     }
