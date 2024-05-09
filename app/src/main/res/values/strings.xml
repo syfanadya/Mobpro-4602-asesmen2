@@ -9,8 +9,8 @@
     <string name="nohp">No Hp</string>
     <string name="judul_buku">Judul Buku</string>
     <string name="status">Status</string>
-    <string name="tanggal_pinjam">Tanggal Pinjam</string>
-    <string name="tanggal_kembali">Tanggal Kembali</string>
+    <string name="tanggal_pinjam">Tanggal Pinjam (dd-mm-yyyy)</string>
+    <string name="tanggal_kembali">Tanggal Kembali (dd-mm-yyyy)</string>
     <string name="empty_data_image">Empty data image</string>
     <string name="status_sedangdipinjam">Sedang Dipinjam</string>
     <string name="status_sudahdikembalikan">Sudah Dikembalikan</string>

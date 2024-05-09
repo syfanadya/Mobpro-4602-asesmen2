@@ -70,7 +70,7 @@ fun DetailScreen(navController: NavHostController, id:Long? = null){
     var nohp by remember { mutableStateOf("") }
     var judulbuku by remember { mutableStateOf("") }
     var selectedStatus by remember { mutableStateOf("Sedang Dipinjam") }
-    var tanggalpinjam by remember { mutableStateOf(viewModel.getCurrentFormattedDate()) }
+    var tanggalpinjam by remember { mutableStateOf("") }
     var tanggalkembali by remember { mutableStateOf("") }
 
     var showDialog by remember { mutableStateOf(false) }
@@ -115,7 +115,7 @@ fun DetailScreen(navController: NavHostController, id:Long? = null){
                             return@IconButton
                         }
                         if (id == null){
-                            viewModel.insert(nama, nim, nohp, judulbuku, selectedStatus, tanggalkembali)
+                            viewModel.insert(nama, nim, nohp, judulbuku, selectedStatus, tanggalpinjam, tanggalkembali)
                         } else {
                             viewModel.update(id, nama, nim, nohp, judulbuku, selectedStatus, tanggalpinjam, tanggalkembali)
                         }
@@ -201,6 +201,7 @@ fun FormPeminjaman(
         stringResource(id = R.string.status_sedangdipinjam),
         stringResource(id = R.string.status_sudahdikembalikan)
     )
+
     Column (
         modifier = modifier
             .fillMaxSize()
@@ -273,6 +274,7 @@ fun FormPeminjaman(
                 )
             }
         }
+
         OutlinedTextField(
             value = borrowDate,
             onValueChange = {onBorrowDateChange(it)},
@@ -282,7 +284,6 @@ fun FormPeminjaman(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
             ),
-            enabled = false,
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
@@ -291,6 +292,7 @@ fun FormPeminjaman(
             label = { Text(text = stringResource(R.string.tanggal_kembali))},
             singleLine = true,
             keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done
             ),
             modifier = Modifier.fillMaxWidth()
